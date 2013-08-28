@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:regxml="http://www.forensicswiki.org/wiki/RegXML"
+  targetNamespace="http://www.forensicswiki.org/wiki/RegXML"
+  elementFormDefault="qualified">
+  <xs:element name="regxml">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regxml:metadata" minOccurs="1"/>
+        <xs:element ref="regxml:creator" minOccurs="1"/>
+        <xs:element ref="regxml:source" minOccurs="1"/>
+        <xs:element ref="regxml:hive" minOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="alloc">
+  </xs:element>
+  <xs:element name="build_environment">
+  </xs:element>
+  <xs:element name="byte_run">
+  </xs:element>
+  <xs:element name="byte_runs">
+  </xs:element>
+  <xs:element name="cellobject">
+  </xs:element>
+  <xs:element name="cellpath">
+  </xs:element>
+  <xs:element name="command_line">
+  </xs:element>
+  <xs:element name="creator">
+  </xs:element>
+  <xs:element name="execution_environment">
+  </xs:element>
+  <xs:element name="hive">
+  </xs:element>
+  <xs:element name="image_filename">
+  </xs:element>
+  <xs:element name="interpreter">
+  </xs:element>
+  <xs:element name="library">
+  </xs:element>
+  <xs:element name="metadata">
+  </xs:element>
+  <xs:element name="mtime">
+  </xs:element>
+  <xs:element name="name_type">
+  </xs:element>
+  <xs:element name="program">
+  </xs:element>
+  <xs:element name="source">
+  </xs:element>
+  <xs:element name="start_time">
+  </xs:element>
+  <xs:element name="version">
+  </xs:element>
+
+</xs:schema>
