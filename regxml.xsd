@@ -5,6 +5,8 @@
   xmlns:regxml="http://www.forensicswiki.org/wiki/RegXML"
   targetNamespace="http://www.forensicswiki.org/wiki/RegXML"
   elementFormDefault="qualified">
+
+  <!--The root element-->
   <xs:element name="regxml">
     <xs:complexType>
       <xs:sequence>
@@ -17,35 +19,143 @@
     </xs:complexType>
   </xs:element>
 
+  <!--All further elements listed in alphabetical order.-->
+
   <xs:element name="alloc">
+    <xs:simpleType>
+      <xs:restriction base="xs:integer">
+        <xs:enumeration value="0"/>
+        <xs:enumeration value="1"/>
+      </xs:restriction>
+    </xs:simpleType>
   </xs:element>
+
   <xs:element name="build_environment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regxml:interpreter" minOccurs="1" maxOccurs="1"/>
+        <xs:element ref="regxml:library" minOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
   </xs:element>
+
   <xs:element name="byte_run">
+    <xs:complexType>
+      <xs:attribute name="file_offset" type="xs:integer" use="required"/>
+      <xs:attribute name="len" type="xs:integer" use="required"/>
+    </xs:complexType>
   </xs:element>
+
   <xs:element name="byte_runs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regxml:byte_run" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
   </xs:element>
+
   <xs:element name="cellobject">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="regxml:cellpath"/>
+        <xs:element ref="regxml:name"/>
+        <xs:element ref="regxml:name_type"/>
+        <xs:element ref="regxml:alloc"/>
+        <xs:element ref="regxml:mtime" minOccurs="0"/>
+        <xs:element ref="regxml:data" minOccurs="0"/>
+        <xs:element ref="regxml:byte_runs"/>
+      </xs:all>
+      <xs:attribute name="root">
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:enumeration value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
   </xs:element>
-  <xs:element name="cellpath">
-  </xs:element>
-  <xs:element name="command_line">
-  </xs:element>
+
+  <xs:element name="cellpath" type="xs:string"/>
+
+  <xs:element name="command_line" type="xs:string"/>
+
   <xs:element name="creator">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regxml:program"/>
+        <xs:element ref="regxml:version"/>
+        <xs:element ref="regxml:build_environment"/>
+        <xs:element ref="regxml:execution_environment"/>
+      </xs:sequence>
+    </xs:complexType>
   </xs:element>
+
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="encoding">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="base64"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="type">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <!--TODO These should be changed to the REG_ style names, instead of the curent names-->
+                <xs:enumeration value="expand"/>
+                <xs:enumeration value="int32"/>
+                <xs:enumeration value="int64"/>
+                <xs:enumeration value="string"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="execution_environment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regxml:command_line" minOccurs="0"/>
+        <xs:element ref="regxml:start_time" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
   </xs:element>
+
+  <!--TODO There is more metadata to be added, such as mtime, embedded hive name; awaiting implementation.-->
   <xs:element name="hive">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regxml:cellobject" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
   </xs:element>
-  <xs:element name="image_filename">
-  </xs:element>
-  <xs:element name="interpreter">
-  </xs:element>
+
+  <xs:element name="image_filename" type="xs:string"/>
+
+  <xs:element name="interpreter" type="xs:string"/>
+
   <xs:element name="library">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="name" type="xs:string"/>
+          <xs:attribute name="version" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
   </xs:element>
+
   <xs:element name="metadata">
   </xs:element>
+
   <xs:element name="mtime">
+  </xs:element>
+  <xs:element name="name">
   </xs:element>
   <xs:element name="name_type">
   </xs:element>
