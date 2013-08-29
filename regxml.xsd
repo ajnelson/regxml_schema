@@ -6,6 +6,12 @@
   targetNamespace="http://www.forensicswiki.org/wiki/RegXML"
   elementFormDefault="qualified">
 
+  <!--
+  The Dublin Core metadata schema needs to be imported if you want xmllint to validate.
+  Ref: https://mail.gnome.org/archives/xml/2009-November/msg00022.html
+  -->
+  <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="dc.xsd"/>
+
   <!--The root element-->
   <xs:element name="regxml">
     <xs:complexType>
@@ -151,21 +157,51 @@
   </xs:element>
 
   <xs:element name="metadata">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any namespace="http://purl.org/dc/elements/1.1/"/>
+      </xs:sequence>
+    </xs:complexType>
   </xs:element>
 
-  <xs:element name="mtime">
-  </xs:element>
-  <xs:element name="name">
-  </xs:element>
+  <xs:element name="mtime" type="regxml:dftime"/>
+
+  <xs:element name="name" type="xs:string"/>
+
   <xs:element name="name_type">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="k"/>
+        <xs:enumeration value="v"/>
+      </xs:restriction>
+    </xs:simpleType>
   </xs:element>
-  <xs:element name="program">
-  </xs:element>
+
+  <xs:element name="program" type="xs:string"/>
+
   <xs:element name="source">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regxml:image_filename" minOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
   </xs:element>
-  <xs:element name="start_time">
-  </xs:element>
-  <xs:element name="version">
-  </xs:element>
+
+  <xs:element name="start_time" type="regxml:dftime"/>
+
+  <xs:element name="version" type="xs:string"/>
+
+  <!--complexTypes, listed in alphabetical order-->
+
+  <xs:complexType name="dftime">
+    <xs:annotation>
+      <xs:documentation>A general structure to represent a xs:dateTime with a precision attribute.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:dateTime">
+        <xs:attribute name="prec" type="xs:nonNegativeInteger"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
 
 </xs:schema>
