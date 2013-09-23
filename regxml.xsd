@@ -63,8 +63,10 @@
   <xs:element name="cellobject">
     <xs:complexType>
       <xs:sequence>
+        <xs:element ref="regxml:parent_object" minOccurs="0" maxOccurs="1"/>
         <xs:element ref="regxml:cellpath" minOccurs="0" maxOccurs="1"/>
         <xs:element ref="regxml:name" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="regxml:id" minOccurs="0" maxOccurs="1"/>
         <xs:element ref="regxml:name_type" minOccurs="0" maxOccurs="1"/>
         <xs:element ref="regxml:alloc" minOccurs="0" maxOccurs="1"/>
         <xs:element ref="regxml:mtime" minOccurs="0" maxOccurs="1"/>
@@ -141,6 +143,12 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="id" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>A unique identifier for the file.  It is distinct to both the input data and the process parameters of the generating tool.  (That is, it is commonly defined by incrementing a global counter in walk-encounter order of each file and directory.)</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="image_filename" type="xs:string"/>
 
   <xs:element name="interpreter" type="xs:string"/>
@@ -175,6 +183,17 @@
         <xs:enumeration value="v"/>
       </xs:restriction>
     </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="parent_object">
+    <xs:annotation>
+      <xs:documentation>Note that this element does not rely upon the parent cell's path.  It is possible for a hive to contain a key with two allocated child keys with the byte-for-byte same name; such a key was encountered in a research corpus.  It is unknown if that machine was able to boot.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="regxml:id" minOccurs="1" maxOccurs="1"/>
+      </xs:all>
+    </xs:complexType>
   </xs:element>
 
   <xs:element name="program" type="xs:string"/>
