@@ -62,15 +62,15 @@
 
   <xs:element name="cellobject">
     <xs:complexType>
-      <xs:all>
-        <xs:element ref="regxml:cellpath"/>
-        <xs:element ref="regxml:name"/>
-        <xs:element ref="regxml:name_type"/>
-        <xs:element ref="regxml:alloc"/>
-        <xs:element ref="regxml:mtime" minOccurs="0"/>
-        <xs:element ref="regxml:data" minOccurs="0"/>
-        <xs:element ref="regxml:byte_runs"/>
-      </xs:all>
+      <xs:sequence>
+        <xs:element ref="regxml:cellpath" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="regxml:name" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="regxml:name_type" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="regxml:alloc" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="regxml:mtime" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="regxml:data" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="regxml:byte_runs" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
       <xs:attribute name="root">
         <xs:simpleType>
           <xs:restriction base="xs:integer">
